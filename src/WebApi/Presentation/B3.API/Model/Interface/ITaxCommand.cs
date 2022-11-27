@@ -1,6 +1,6 @@
 ﻿namespace B3.API.Model.Interface
 {
-    public interface ITax
+    public interface ITaxCommand
     {
         public abstract decimal Calculate(decimal valorRendimento);
     }

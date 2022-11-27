@@ -1,4 +1,4 @@
-﻿namespace B3.API.Model.Enum
+﻿namespace B3.API.Model.Enuns
 {
     public enum MonthlyTax
     {

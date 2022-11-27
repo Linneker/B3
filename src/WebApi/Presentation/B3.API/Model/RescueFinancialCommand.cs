@@ -1,4 +1,5 @@
-﻿using B3.API.Helper;
+﻿using B3.API.Config;
+using B3.API.Helper;
 
 namespace B3.API.Model
 {
@@ -19,15 +20,22 @@ namespace B3.API.Model
 
         private void CDBGrossCalculation(decimal vi, int months)
         {
-            decimal vt = 0;
-            for (int i = 0; i < months; i++)
+            try
             {
-                vt += Math.Round(((vi + vt) * (1 + (InvestmentHelper.TB * InvestmentHelper.CDI))) - (vi + vt), 2, MidpointRounding.AwayFromZero);
+                decimal vt = 0;
+                for (int i = 0; i < months; i++)
+                {
+                    vt += Math.Round(((vi + vt) * (1 + (InvestmentHelper.TB * InvestmentHelper.CDI))) - (vi + vt), 2, MidpointRounding.AwayFromZero);
+                }
+                _grossAmount = (vi + vt);
             }
-            _grossAmount = (vi + vt);
+            catch
+            {
+                throw new TaxException("Valores invalidos, por favor insira um valor valido!");
+            }
         }
         private void CDBNetCalculation(decimal vi, int months)
-        => _netAmount = Math.Round(vi + new TaxFactory().GetTax(months.GetTaxEnum(), GrossAmount - vi), 2, MidpointRounding.AwayFromZero);
+        => _netAmount = Math.Round(vi + new TaxFactoryCommand().GetTax(months.GetTaxEnum(), GrossAmount - vi), 2, MidpointRounding.AwayFromZero);
 
 
 

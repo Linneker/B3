@@ -1,5 +1,5 @@
 ﻿using B3.API.Config;
-using B3.API.Model.Enum;
+using B3.API.Model.Enuns;
 
 namespace B3.API.Helper
 {

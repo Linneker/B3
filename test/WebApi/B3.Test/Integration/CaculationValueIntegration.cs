@@ -1,6 +1,10 @@
-﻿using B3.Test.Fixture;
+﻿using B3.API.Config;
+using B3.API.Model;
+using B3.Test.Config;
+using B3.Test.Fixture;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
@@ -29,10 +33,66 @@ namespace B3.Test.Integration
             var value = _valueCalculateFixture.GenerateValue();
 
             //Act
-            var response = await _testConfigurationFixture.Client.PostAsJsonAsync($"api/InvestmentCalculation/Calculate", value);
+            HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/{value.Month}");
 
             //Assert
-            response.EnsureSuccessStatusCode();
+            Assert.True(response.IsSuccessStatusCode);
+        }
+
+
+        [Fact(DisplayName = "Não seve calcular o valor informado")]
+        [Trait("InvestmentCalculation", "Não calcular o valor de rendimento")]
+        public async Task InvestmentCalculation_RequestCalcElement_Error()
+        {
+            //Arrange
+            var value = _valueCalculateFixture.GenerateValueError();
+
+            //Act
+            HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/{value.Month}");
+
+            //Assert
+            Assert.False(response.IsSuccessStatusCode);
+        }
+
+
+        [Fact(DisplayName = "Deve dar erro com Elemento Initial Nulo")]
+        [Trait("InvestmentCalculation", "Não calcular o valor de rendimento")]
+        public async Task InvestmentCalculation_RequestCalcElementInitialValueNull_Error()
+        {
+            //Arrange
+            var value = _valueCalculateFixture.GenerateValueErrorZero();
+
+            //Act
+            HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/ABC/{value.Month}");
+
+            //Assert
+            Assert.False(response.IsSuccessStatusCode);
+        }
+        [Fact(DisplayName = "Deve dar erro com Elemento Initial Nulo")]
+        [Trait("InvestmentCalculation", "Não calcular o valor de rendimento")]
+        public async Task InvestmentCalculation_RequestCalcElementInitialValueZero_Error()
+        {
+            //Arrange
+            var value = _valueCalculateFixture.GenerateValueErrorZero();
+
+            //Act
+            HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/{value.Month}");
+
+            //Assert
+            Assert.False(response.IsSuccessStatusCode);
+        }
+        [Fact(DisplayName = "Não seve calcular o valor informado")]
+        [Trait("InvestmentCalculation", "Não calcular o valor de rendimento")]
+        public async Task InvestmentCalculation_RequestCalcElementMonthNull_Error()
+        {
+            //Arrange
+            var value = _valueCalculateFixture.GenerateValueErrorZero();
+
+            //Act
+            HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/ERRO");
+
+            //Assert
+            Assert.False(response.IsSuccessStatusCode);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using B3.API.Model;
+﻿using B3.API.Config;
+using B3.API.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace B3.API.Controllers
 {
@@ -8,15 +10,23 @@ namespace B3.API.Controllers
     [ApiController]
     public class InvestmentCalculationController : ControllerBase
     {
-        [HttpPost("Calculate")]
+        [ValidationCalculationFilterAttribute]
+        [HttpGet("Calculate/{initialValue}/{month}")]
         [ProducesResponseType(typeof(RescueFinancialCommand), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status410Gone)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult Calculate(ValueCalculate valueCalculate)
+        public IActionResult Calculate(decimal initialValue, int month)
         {
-            var valor = new RescueFinancialCommand(valueCalculate.InitialValue, valueCalculate.Month);
-            return Ok(valor);
+            try
+            {
+                RescueFinancialCommand valor = new RescueFinancialCommand(initialValue,month);
+                return Ok(valor);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

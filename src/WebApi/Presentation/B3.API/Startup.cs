@@ -6,11 +6,16 @@ using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using B3.API.Validation;
 using NLog.Extensions.Logging;
+using FluentValidation;
+using System;
+using B3.API.Model;
 
 namespace B3.API
 {
     public class Startup
     {
+        private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,12 +36,22 @@ namespace B3.API
                 options.Level = CompressionLevel.SmallestSize;
             });
 
-            services.AddControllers().AddFluentValidation(_ =>
-                 {
-                     _.RegisterValidatorsFromAssemblyContaining<ValueCalculateValidation>();
-                     _.DisableDataAnnotationsValidation = true;
-                 });
+            services.AddControllers();
 
+            services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+            services.AddScoped<IValidator<ValueCalculateCommand>, ValueCalculateValidation>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:4200",
+                                                          "https://localhost:4200").
+                                                          AllowAnyHeader().
+                                                          AllowAnyMethod().
+                                                          Build();
+                                  });
+            });
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
@@ -85,7 +100,10 @@ namespace B3.API
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseRouting();
+
 
             app.UseAuthentication();
             app.UseAuthorization();

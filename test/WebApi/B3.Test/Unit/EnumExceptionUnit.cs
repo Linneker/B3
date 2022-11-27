@@ -1,5 +1,6 @@
 ﻿using B3.API.Config;
 using B3.API.Model;
+using B3.API.Model.Enuns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace B3.Test.Unit
         public void TaxException_GenenationExption_Sucess()
         {
             //Arrage Act Assert
-            var excessao = Assert.Throws<TaxException>(() => new TaxFactory().GetTax(API.Model.Enum.MonthlyTax.ForceError, 1000));
+            var excessao = Assert.Throws<TaxException>(() => new TaxFactoryCommand().GetTax(MonthlyTax.ForceError, 1000));
             _testOutputHelper.WriteLine($"Excessão {excessao.Message}!");
 
         }
