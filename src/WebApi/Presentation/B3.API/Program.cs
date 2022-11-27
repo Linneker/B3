@@ -1,25 +1,18 @@
+using B3.API;
+using NLog.Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
+logger.Debug("Inicio");
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
+builder.Logging.AddJsonConsole();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+startup.Configure(app, app.Environment, Startup.loggerFactory);
 
 app.Run();
+
+logger.Debug("Fim");

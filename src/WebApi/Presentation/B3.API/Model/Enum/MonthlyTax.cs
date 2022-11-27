@@ -5,6 +5,7 @@
         UpToSix,
         UpToTwelve,
         UpToTwentyFour,
-        AboveTwentyFour
+        AboveTwentyFour,
+        ForceError
     }
 }
