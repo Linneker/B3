@@ -18,7 +18,7 @@ namespace B3.API.Config
             if (initialObject is null)
                 context.Result = new BadRequestObjectResult($"Valor para investimento invalido!");
             else if (monthObject is null)
-                      context.Result = new BadRequestObjectResult($"Valor invalido para mês!");
+                context.Result = new BadRequestObjectResult($"Valor invalido para mês!");
             else
             {
                 decimal initial = (decimal)initialObject;

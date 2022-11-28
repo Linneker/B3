@@ -15,6 +15,7 @@ namespace B3.Test.Fixture
     }
     public class ValueCalculateFixture: IDisposable
     {
+
         public ValueCalculateFixture() { }
 
         public ValueCalculateCommand GenerateValue(string local="pt_BR")
@@ -45,7 +46,17 @@ namespace B3.Test.Fixture
         }
         public void Dispose()
         {
-            GC.Collect();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                GC.Collect();
+            }
+        }
+
+
     }
 }

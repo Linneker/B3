@@ -11,7 +11,7 @@ namespace B3.API.Helper
             else if (month > 6 && month <= 12) return MonthlyTax.UpToTwelve;
             else if (month > 12 && month <= 24) return MonthlyTax.UpToTwentyFour;
             else if (month > 24) return MonthlyTax.AboveTwentyFour;
-            else throw new EnumExcaption("Valor fornecido invalido!", month);
+            else throw new EnumException("Valor fornecido invalido!", month);
 
         }
     }

@@ -15,7 +15,6 @@ namespace B3.Test.Fixture
     }
     public class TestConfigurationFixture : IDisposable
     {
-
         public readonly TestIntegrationFactory Factory;
         public HttpClient Client;
 
@@ -28,8 +27,18 @@ namespace B3.Test.Fixture
 
         public void Dispose()
         {
-            Client.Dispose();
-            Factory.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+          
+            if (disposing)
+            {
+                Client.Dispose();
+                Factory.Dispose();
+            }
+
         }
 
     }

@@ -12,9 +12,9 @@ using B3.API.Model;
 
 namespace B3.API
 {
-    public class Startup
+    public partial class Startup
     {
-        private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -68,6 +68,8 @@ namespace B3.API
                         Description = "Please enter JWT with Bearer into field"
 
                     });
+                c.OperationFilter<CustomHeaderSwaggerAttribute>();
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {
