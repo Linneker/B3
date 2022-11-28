@@ -101,8 +101,8 @@ Assim que clicar no botão será exibido um resultado na tabela abaixo do campo 
 
 ## Observações
 
-O sistema foi pensado de forma a se comportar como microserviços por esse motivo não contém várias projetos classlib.
-A separação das camadas foi feita dentro de um único projeto.
+O sistema foi pensado de forma a se comportar como microserviços, por esse motivo, não contém várias projetos classlib.
+A separação das camadas foi realizado dentro de um único projeto.
 
-O .Net 7 foi escolhido por ser o mais atual e o desafio permitir versões superiores ao .Net Framework 4.7.1.
+O .Net 7 foi escolhido por ser o mais atual e o desafio permitir versões superiores ao .Net Framework 4.7.2.
 
