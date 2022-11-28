@@ -6,6 +6,11 @@ Esse projeto é um desafio para concorrer a uma vaga de empresa.
 Os testes podem ser excutados seguindo os seguintes passos:
 
 ### Passo 1:
-```
-Dar exemplos
-```
+
+Relizar o download do projeto.
+
+### Passo 2:
+
+Abrir o serviço no VisualStudio 2022 ou VisualStudio Code
+
+### Passo 3:
