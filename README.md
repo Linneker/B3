@@ -39,7 +39,7 @@ Execute o projeto clicando em excutar projeto.
 
 Ao executar o sistema vai abrir o navegador padrão do computador juntamente com uma pagina do swagger e pronto o projeto pode ser executado e testado utilizando o swagger.
 
-*Obs: Não será possivel executar com swagger sem a chave de acesso que está presente  no arquivo appsettings.Development.json.*
+>*Obs: Não será possivel executar com swagger sem a chave de acesso que está presente  no arquivo appsettings.Development.json.*
 
 ### Executar Teste de Unidade e Integração
 
