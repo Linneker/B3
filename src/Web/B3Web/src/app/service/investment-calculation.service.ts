@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -16,7 +16,10 @@ export class InvestmentCalculationService {
   }
 
   calculate(data: ValueCalculate) : Observable<any> {
-    return this.httpClient.post<any>(`${this.baseUrl}investmentcalculation/calculate`, data);
+    let headers = new HttpHeaders()
+        .append('key', environment.key)
+
+    return this.httpClient.get<any>(`${this.baseUrl}investmentcalculation/calculate/${data.initialValue}/${data.month}`,{headers});
   }
 
 }

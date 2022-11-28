@@ -10,16 +10,26 @@ namespace B3.API.Controllers
     [ApiController]
     public class InvestmentCalculationController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        public InvestmentCalculationController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [ValidationCalculationFilterAttribute]
         [HttpGet("Calculate/{initialValue}/{month}")]
         [ProducesResponseType(typeof(RescueFinancialCommand), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status410Gone)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult Calculate(decimal initialValue, int month)
+        public IActionResult Calculate(
+            decimal initialValue, int month)
         {
             try
             {
+                if(!IsValidKey())
+                    return this.StatusCode(StatusCodes.Status401Unauthorized, "Por favor insira as credenciais validas");
+
                 RescueFinancialCommand valor = new RescueFinancialCommand(initialValue,month);
                 return Ok(valor);
             }
@@ -27,6 +37,14 @@ namespace B3.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        private bool IsValidKey()
+        {
+            var _apiKey = HttpContext.Request.Headers["key"].ToString();
+            if (_configuration.GetSection("APIKeys").Value != _apiKey)
+                return false;
+            return true;
         }
     }
 }

@@ -14,12 +14,12 @@ using Xunit;
 namespace B3.Test.Integration
 {
     [Collection(nameof(ValueCalculateCollection))]
-    public class CaculationValueIntegration: IClassFixture<TestConfigurationFixture>
+    public class CalculationValueIntegration: IClassFixture<TestConfigurationFixture>
     {
         private readonly TestConfigurationFixture _testConfigurationFixture;
         private readonly ValueCalculateFixture _valueCalculateFixture;
      
-        public CaculationValueIntegration(TestConfigurationFixture testConfigurationFixture, ValueCalculateFixture valueCalculateFixture) 
+        public CalculationValueIntegration(TestConfigurationFixture testConfigurationFixture, ValueCalculateFixture valueCalculateFixture) 
         {
             _testConfigurationFixture = testConfigurationFixture;
             _valueCalculateFixture = valueCalculateFixture;
@@ -51,7 +51,7 @@ namespace B3.Test.Integration
             HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/{value.Month}");
 
             //Assert
-            Assert.False(response.IsSuccessStatusCode);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
         }
 
 
@@ -66,7 +66,7 @@ namespace B3.Test.Integration
             HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/ABC/{value.Month}");
 
             //Assert
-            Assert.False(response.IsSuccessStatusCode);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
         }
         [Fact(DisplayName = "Deve dar erro com Elemento Initial Nulo")]
         [Trait("InvestmentCalculation", "Não calcular o valor de rendimento")]
@@ -74,12 +74,12 @@ namespace B3.Test.Integration
         {
             //Arrange
             var value = _valueCalculateFixture.GenerateValueErrorZero();
-
+            
             //Act
             HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/{value.Month}");
 
             //Assert
-            Assert.False(response.IsSuccessStatusCode);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
         }
         [Fact(DisplayName = "Não seve calcular o valor informado")]
         [Trait("InvestmentCalculation", "Não calcular o valor de rendimento")]
@@ -92,7 +92,9 @@ namespace B3.Test.Integration
             HttpResponseMessage response = await _testConfigurationFixture.Client.GetAsync($"api/InvestmentCalculation/Calculate/{value.InitialValue}/ERRO");
 
             //Assert
-            Assert.False(response.IsSuccessStatusCode);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
         }
+
+
     }
 }
