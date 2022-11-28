@@ -3,14 +3,22 @@ Esse projeto é um desafio para concorrer a uma vaga de empresa.
 
 ## EXECUTAR TESTES UNITÁRIOS
 
-Os testes podem ser excutados seguindo os seguintes passos:
+Para rodar o sistema é necessário possuir os frameworks nas versões:
+-----------------------------
+|.NET| Angular | Node
+| 7 | 15.0.1 | 18.12.1
+-----------------------------
 
-### Passo 1:
+### WEB API
+
+
+
+#### Passo 1:
 
 Relizar o download do projeto.
 
-### Passo 2:
+#### Passo 2:
 
-Abrir o serviço no VisualStudio 2022 ou VisualStudio Code
+Abrir o código no Visual Studio 2022
 
-### Passo 3:
+#### Passo 3:
