@@ -51,12 +51,17 @@ Para executar os testes é necessário executar os seguintes passos
 
 No seu visual studio 2022 vá na aba Teste e clique em Gerenciador de Testes.
 
-### Passo 2:
+#### Passo 2:
 
 Ao abrir a aba de gerenciador de teste clique com botão direito em cima de B3.Test e então clique em executar.
 
 O sistema vai executar todos os testes configurados para o projeto.
 
+>Um dos projetos pode dar erro, pois um arquivo csv pode não ir para a pasta de compilação do sistema, caso isso ocorra copie o arquivo data.csv e cole na pasta `bin/Debug` e execute os testes novamente.
+
+#### Passo 3:
+
+Após os testes serem realizados com sucesso você pode ir até a pasta `bin/Debug` e dentro dessa pasta vai conter uma pasta com nome fine covered dentro dela vai conter relatórios de cobertura do código, caso você queira verificar.
 
 ## WEB 
 
@@ -94,5 +99,10 @@ Insira os valores que estarão indicado na tela e clique no botão Pesquisar.
 
 Assim que clicar no botão será exibido um resultado na tabela abaixo do campo de pesquisa.
 
+## Observações
 
+O sistema foi pensado de forma a se comportar como microserviços por esse motivo não contém várias projetos classlib.
+A separação das camadas foi feita dentro de um único projeto.
+
+O .Net 7 foi escolhido por ser o mais atual e o desafio permitir versões superiores ao .Net Framework 4.7.1.
 
